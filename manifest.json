@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "Dota 2 Blog Update Plugin",
+    "description": "This extension will popup dota 2 blog update when available",
+    "version": "0.1",
+    "browser_action": {
+        "default_icon": "logo.jpg",
+        "default_popup": "main.html"
+    },
+    "permissions": [
+        "activeTab"
+    ],
+    "web_accessible_resources": [
+        "lib/bootstrap/css/bootstrap.min.css"
+    ],
+    "content_scripts": [
+        {
+            "css": [
+                "lib/bootstrap/css/bootstrap.min.css"
+            ]
+        }
+    ]
+}
