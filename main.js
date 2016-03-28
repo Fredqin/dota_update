@@ -1,6 +1,11 @@
 var updater = (function() {
     // dom elements
-    var checkBtn = null;
+    var checkBtn,
+        postListDom = null;
+
+    // settings 
+
+
 
     // get all blogs update in the page
     function getAllBlogs(callback) {
@@ -15,7 +20,7 @@ var updater = (function() {
     }
 
     // extract post list
-    function extractPostList(rawHtml) {
+    function extractPostList(rawHtml, callback) {
         var html = document.createElement('html');
         html.innerHTML = rawHtml;
         var mainLoop = html.querySelector('div#mainLoop');
@@ -30,8 +35,8 @@ var updater = (function() {
                 postList.push(post);
             }
         }
-        
-        return postList;
+
+        return (postList);
     }
 
     // get post
@@ -60,10 +65,63 @@ var updater = (function() {
         return post;
     }
 
+    // render post list
+    function renderPostList(postList) {
+        postListDom = document.querySelector('div#post_list');
+
+        for (var i = 0; i < postList.length; i++) {
+            var postHtml = createPostHtml(postList[i]);
+            postListDom.appendChild(postHtml);
+        }
+    }
+
+    // create post html
+    function createPostHtml(post) {
+        var postHtml = document.createElement('div');
+        postHtml.className = "post";
+
+        var postTitle = createPostTitleHtml(post.title);
+        var postMeta = createPostMetaHtml(post.meta);
+        var postContent = createPostContentHtml(post.content);
+
+        postHtml.appendChild(postTitle);
+        postHtml.appendChild(postMeta);
+        postHtml.appendChild(postContent);
+
+        return postHtml;
+    }
+
+    // create post title html
+    function createPostTitleHtml(title) {
+        var titleHtml = document.createElement('div');
+        titleHtml.innerHTML = title;
+        titleHtml.className = "post_title";
+        return titleHtml;
+    }
+
+    // create post meta html
+    function createPostMetaHtml(meta) {
+        var metaHtml = document.createElement('div');
+        metaHtml.innerHTML = meta;
+        metaHtml.className = "post_meta";
+        return metaHtml;
+    }
+
+    // create post content html
+    function createPostContentHtml(content) {
+        var contentHtml = document.createElement('div');
+        contentHtml.innerHTML = content;
+        contentHtml.className = "post_content";
+        return contentHtml;
+    }
+
     return {
         // init the updater
         init: function() {
-            getAllBlogs(extractPostList);
+            getAllBlogs(function(rawHtml) {
+                var postList = extractPostList(rawHtml);
+                renderPostList(postList);
+            });
         }
     }
 })();
