@@ -1,4 +1,10 @@
 var updater = (function() {
+    // todo
+    // 1. added css
+    // 2. run in background
+    // 3. popup how many not read
+    // 4. can disable the extension
+    
     // dom elements
     var checkBtn,
         postListDom = null;
@@ -118,6 +124,7 @@ var updater = (function() {
     return {
         // init the updater
         init: function() {
+
             getAllBlogs(function(rawHtml) {
                 var postList = extractPostList(rawHtml);
                 renderPostList(postList);

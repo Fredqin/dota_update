@@ -7,8 +7,26 @@
         "default_icon": "logo.jpg",
         "default_popup": "main.html"
     },
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
     "permissions": [
         "http://*/*",
         "https://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./lib/jquery.min.js",
+                "updater.js",
+                "content.js"
+            ],
+            "css": []
+        }
     ]
 }
