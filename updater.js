@@ -75,6 +75,10 @@ var updater = (function() {
     function renderPostList(postList) {
         postListDom = document.querySelector('div#post_list');
 
+        if(!postListDom) {
+            return;
+        }
+
         for (var i = 0; i < postList.length; i++) {
             var postHtml = createPostHtml(postList[i]);
             postListDom.appendChild(postHtml);
@@ -122,6 +126,12 @@ var updater = (function() {
     }
 
     return {
+        // get all blogs
+        getAllBlogs: getAllBlogs,
+        
+        // render post list
+        renderPostList: renderPostList,
+        
         // init the updater
         init: function() {
 
@@ -133,7 +143,5 @@ var updater = (function() {
     }
 })();
 
-document.addEventListener('DOMContentLoaded', function() {
-    updater.init();
-}, false);
+updater.init();
 

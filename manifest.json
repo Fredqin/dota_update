@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "browser_action": {
         "default_icon": "logo.jpg",
-        "default_popup": "main.html"
+        "default_popup": "popup.html"
     },
     "background": {
         "scripts": [
@@ -23,8 +23,7 @@
             ],
             "js": [
                 "./lib/jquery.min.js",
-                "updater.js",
-                "content.js"
+                "updater.js"
             ],
             "css": []
         }
