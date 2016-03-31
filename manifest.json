@@ -9,6 +9,8 @@
     },
     "background": {
         "scripts": [
+            "./lib/jquery.min.js",
+            "updater.js",
             "background.js"
         ]
     },
@@ -22,8 +24,7 @@
                 "<all_urls>"
             ],
             "js": [
-                "./lib/jquery.min.js",
-                "updater.js"
+                "./lib/jquery.min.js"
             ],
             "css": []
         }

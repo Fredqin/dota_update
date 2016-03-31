@@ -1,8 +1,9 @@
 var updater = (function() {
     // todo
-    // 1. added css
+    // 1. added css (done)
     // 2. run in background
     // 3. popup how many not read
+    // 3.1 click to clear update
     // 4. can disable the extension
     
     // dom elements
@@ -106,6 +107,13 @@ var updater = (function() {
         var titleHtml = document.createElement('div');
         titleHtml.innerHTML = title;
         titleHtml.className = "post_title";
+        
+        // set a tag to target blank
+        var link = titleHtml.querySelector("a");
+        if(link) {
+            link.setAttribute('target', '_blank');
+        }
+        
         return titleHtml;
     }
 
