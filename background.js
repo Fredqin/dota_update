@@ -1,4 +1,4 @@
-var pollInterval = 1000 * 10; // 1 minute, in milliseconds
+var pollInterval = 1000 * 60 * 60; // 1 minute, in milliseconds
 var timerId;
 
 function updateBadge() {
