@@ -1,21 +1,72 @@
-// chrome.browserAction.setBadgeText({text: "1"}); // We have 10+ unread items.
+var pollInterval = 1000 * 10; // 1 minute, in milliseconds
+var timerId;
 
-// console.log(updater)
+function updateBadge() {
+    // check updates
+    checkHowManyNewUpdate();
+}
 
+function checkHowManyNewUpdate() {
+    var lastUpdateTime = "";
 
-// var pollInterval = 1000 * 60; // 1 minute, in milliseconds
-// var timerId;
+    chrome.storage.local.get('lastUpdateTime', function(result) {
+        console.log(result)
+        // if undefined
+        if (!result.lastUpdateTime) {
+            setLastUpdateTime();
+        }
 
-// function updateBadge() {
-// 	updater
-// }
+        getNumberOfNotRead(result.lastUpdateTime, function(count) {
+            if (count !== 0) {
+                chrome.browserAction.setBadgeText({ text: count.toString() });
+            }
+        });
+    });
+}
 
-// function startRequest() {
-// 	updateBadge();
-// 	timerId = window.setTimeout(startRequest, pollInterval);
-// }
+// set lastUpdateTime
+function setLastUpdateTime() {
+    updater.getAllBlogs(function(postList) {
+        var firstPost = postList[0];
 
-// function stopRequest() {
-// 	window.clearTimeout(timerId);
-// }
+        if (firstPost) {
+            var meta = firstPost.meta;
+            chrome.storage.local.set({ 'lastUpdateTime': meta });
+        }
+    });
+}
+
+// get number of not read
+function getNumberOfNotRead(lastUpdateTime, callback) {
+    var count = 0;
+
+    updater.getAllBlogs(function(postList) {
+        var post = {};
+        for (var i = 0; i < postList.length; i++) {
+            post = postList[i];
+
+            if (post.meta === lastUpdateTime) {
+                callback(count);
+                return;
+            } else {
+                count++;
+            }
+        }
+
+        callback(count);
+    });
+
+}
+
+function startRequest() {
+    updateBadge();
+    timerId = window.setTimeout(startRequest, pollInterval);
+}
+
+function stopRequest() {
+    window.clearTimeout(timerId);
+}
+
+// startRequest
+startRequest();
 

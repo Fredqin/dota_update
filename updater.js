@@ -1,11 +1,11 @@
 var updater = (function() {
     // todo
     // 1. added css (done)
-    // 2. run in background
-    // 3. popup how many not read
+    // 2. run in background (done)
+    // 3. popup how many not read (done)
     // 3.1 click to clear update
     // 4. can disable the extension
-    
+
     // dom elements
     var checkBtn,
         postListDom = null;
@@ -20,14 +20,15 @@ var updater = (function() {
         xhr.open("GET", "http://blog.dota2.com/", true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
-                callback(xhr.responseText);
+                var postList = extractPostList(xhr.responseText);
+                callback(postList);
             }
         }
         xhr.send();
     }
 
     // extract post list
-    function extractPostList(rawHtml, callback) {
+    function extractPostList(rawHtml) {
         var html = document.createElement('html');
         html.innerHTML = rawHtml;
         var mainLoop = html.querySelector('div#mainLoop');
@@ -76,7 +77,7 @@ var updater = (function() {
     function renderPostList(postList) {
         postListDom = document.querySelector('div#post_list');
 
-        if(!postListDom) {
+        if (!postListDom) {
             return;
         }
 
@@ -107,13 +108,13 @@ var updater = (function() {
         var titleHtml = document.createElement('div');
         titleHtml.innerHTML = title;
         titleHtml.className = "post_title";
-        
+
         // set a tag to target blank
         var link = titleHtml.querySelector("a");
-        if(link) {
+        if (link) {
             link.setAttribute('target', '_blank');
         }
-        
+
         return titleHtml;
     }
 
@@ -136,15 +137,14 @@ var updater = (function() {
     return {
         // get all blogs
         getAllBlogs: getAllBlogs,
-        
+
         // render post list
         renderPostList: renderPostList,
-        
+
         // init the updater
         init: function() {
 
-            getAllBlogs(function(rawHtml) {
-                var postList = extractPostList(rawHtml);
+            getAllBlogs(function(postList) {
                 renderPostList(postList);
             });
         }
