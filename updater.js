@@ -5,6 +5,7 @@ var updater = (function() {
     // 3. popup how many not read (done)
     // 3.1 click to clear update
     // 4. can disable the extension
+    // 5. publish to google store
 
     // dom elements
     var checkBtn,

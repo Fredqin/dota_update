@@ -1,4 +1,4 @@
-var pollInterval = 1000 * 60 * 60; // 1 minute, in milliseconds
+var pollInterval = 1000 * 20; // 1 minute, in milliseconds
 var timerId;
 
 function updateBadge() {
@@ -10,7 +10,6 @@ function checkHowManyNewUpdate() {
     var lastUpdateTime = "";
 
     chrome.storage.local.get('lastUpdateTime', function(result) {
-        console.log(result)
         // if undefined
         if (!result.lastUpdateTime) {
             setLastUpdateTime();
@@ -19,6 +18,8 @@ function checkHowManyNewUpdate() {
         getNumberOfNotRead(result.lastUpdateTime, function(count) {
             if (count !== 0) {
                 chrome.browserAction.setBadgeText({ text: count.toString() });
+            } else {
+                chrome.browserAction.setBadgeText({ text: '' });
             }
         });
     });

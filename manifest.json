@@ -19,6 +19,9 @@
         "http://*/*",
         "https://*/*"
     ],
+    "icons" : {
+        "64": "logo.jpg"
+    },
     "content_scripts": [
         {
             "matches": [
