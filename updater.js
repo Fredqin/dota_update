@@ -91,14 +91,18 @@ var updater = (function() {
     // create post html
     function createPostHtml(post) {
         var postHtml = document.createElement('div');
-        postHtml.className = "post";
+        postHtml.className = "post card";
 
         var postTitle = createPostTitleHtml(post.title);
         var postMeta = createPostMetaHtml(post.meta);
         var postContent = createPostContentHtml(post.content);
 
-        postHtml.appendChild(postTitle);
-        postHtml.appendChild(postMeta);
+        var cardBlock = document.createElement('div');
+        cardBlock.className = "card-header";
+        cardBlock.appendChild(postTitle);
+        cardBlock.appendChild(postMeta);
+        postHtml.appendChild(cardBlock);
+
         postHtml.appendChild(postContent);
 
         return postHtml;
@@ -106,9 +110,9 @@ var updater = (function() {
 
     // create post title html
     function createPostTitleHtml(title) {
-        var titleHtml = document.createElement('div');
+        var titleHtml = document.createElement('h4');
         titleHtml.innerHTML = title;
-        titleHtml.className = "post_title";
+        titleHtml.className = "post_title card-title";
 
         // set a tag to target blank
         var link = titleHtml.querySelector("a");
@@ -121,18 +125,23 @@ var updater = (function() {
 
     // create post meta html
     function createPostMetaHtml(meta) {
-        var metaHtml = document.createElement('div');
+        var metaHtml = document.createElement('h6');
         metaHtml.innerHTML = meta;
-        metaHtml.className = "post_meta";
+        metaHtml.className = "post_meta card-subtitle text-muted";
         return metaHtml;
     }
 
     // create post content html
     function createPostContentHtml(content) {
+        var cardBlock = document.createElement('div');
+        cardBlock.className = "card-block";
+
         var contentHtml = document.createElement('div');
         contentHtml.innerHTML = content;
-        contentHtml.className = "post_content";
-        return contentHtml;
+        contentHtml.className = "post_content card-block";
+
+        cardBlock.appendChild(contentHtml);
+        return cardBlock;
     }
 
     return {
